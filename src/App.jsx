@@ -503,7 +503,7 @@ const ProfileView = () => {
               </div>
               <label className="absolute bottom-1 right-1 bg-black text-white p-2.5 rounded-full cursor-pointer hover:bg-[#ff3c78] transition-colors shadow-lg"><CameraIcon size={16} /><input type="file" className="hidden" onChange={handleFile}/></label>
             </div>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-1">{state.user?.username}</h2>
+            <h2 className="text-2xl font-black !text-white uppercase tracking-tighter mb-1">{state.user?.username}</h2>
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">VIP Gold Member</p>
             <button onClick={() => setIsEditing(!isEditing)} className="w-full py-4 border-2 border-slate-100 dark:border-slate-700 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#ff3c78] hover:text-white hover:border-[#ff3c78] transition-all flex items-center justify-center gap-3 text-slate-900 dark:text-white"><Settings size={14}/> {isEditing ? 'Cancel Edit' : 'Edit Profile'}</button>
           </div>
