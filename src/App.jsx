@@ -316,7 +316,7 @@ const Navbar = ({ onViewChange, currentView, openCart, openLogin }) => {
           </ul>
 
           <div className="absolute left-1/2 -translate-x-1/2 cursor-pointer" onClick={() => onViewChange('home')}>
-             <img src="https://i.postimg.cc/xjwbDHP5/Gemini-Generated-Image-7tu9lb7tu9lb7tu9.png" alt="Logo" className={`h-12 `} />
+             <img src="/Gemini_Generated_Image_7tu9lb7tu9lb7tu9.png" alt="Logo" className="h-12" />
           </div>
 
           <div className="flex items-center gap-4">
@@ -927,7 +927,7 @@ const Footer = () => {
     <footer className="bg-black pt-20 pb-10 text-white">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          <div><img src="https://i.postimg.cc/xjwbDHP5/Gemini-Generated-Image-7tu9lb7tu9lb7tu9.png" alt="logo" className={`h-14 mb-8 `} /><p className="text-slate-400 text-sm leading-relaxed mb-8">The customer is at the heart of our<br/>unique business model, which includes<br/>design.</p><img src="https://i.postimg.cc/Nj9dgJ98/cards.png" alt="cards" className="h-6" /></div>
+          <div><img src="/Gemini_Generated_Image_7tu9lb7tu9lb7tu9.png" alt="logo" className="h-14 mb-8" /><p className="text-slate-400 text-sm leading-relaxed mb-8">The customer is at the heart of our<br/>unique business model, which includes<br/>design.</p><img src="https://i.postimg.cc/Nj9dgJ98/cards.png" alt="cards" className="h-6" /></div>
           <div><h4 className="font-black text-xs uppercase mb-8 tracking-[4px]">Shopping</h4><ul className="space-y-4 text-xs font-black uppercase text-slate-400 tracking-widest"><li><button className="hover:text-[#ff3c78]">Clothing Store</button></li><li><button className="hover:text-[#ff3c78]">Trending Shoes</button></li><li><button className="hover:text-[#ff3c78]">Accessories</button></li><li><button className="hover:text-[#ff3c78]">Sale</button></li></ul></div>
           <div><h4 className="font-black text-xs uppercase mb-8 tracking-[4px]">Support</h4><ul className="space-y-4 text-xs font-black uppercase text-slate-400 tracking-widest"><li><button className="hover:text-[#ff3c78]">Contact Us</button></li><li><button className="hover:text-[#ff3c78]">Payment Method</button></li><li><button className="hover:text-[#ff3c78]">Delivery Status</button></li><li><button className="hover:text-[#ff3c78]">Return and Exchange</button></li></ul></div>
           <div><h4 className="font-black text-xs uppercase mb-8 tracking-[4px]">Newsletter</h4><p className="text-slate-400 text-sm mb-8 font-medium">Be the first to know about new arrivals, look books, sales & promos!</p><div className="flex border-b border-white/20 pb-2 mb-4"><input type="email" placeholder="YOUR EMAIL" className="bg-transparent outline-none flex-1 text-xs font-black" /><Mail size={18} /></div></div>
