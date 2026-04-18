@@ -404,7 +404,7 @@ const HomeView = ({ products, loading, onShopNow, onQuickView, onAddCart, isWish
         <div className="absolute inset-0"><img src="https://i.postimg.cc/t403yfn9/home2.jpg" alt="Hero" className="w-full h-full object-cover object-right" /></div>
         <div className="container mx-auto px-6 relative z-10"><motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} className="max-w-xl">
           <p className="text-[#ff3c78] font-bold tracking-[2px] mb-4 uppercase text-xs">Summer Collection</p>
-          <p className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-900  leading-tight mb-6 uppercase tracking-tighter">Fall - Winter<br/>Collection 2024</p>
+          <p className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-900  leading-tight mb-6 uppercase tracking-tighter">Shop The Latest<br/>Trends Now</p>
           <p className="text-slate-500 text-lg mb-10 leading-relaxed font-medium">A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.</p>
           <button onClick={onShopNow} className="bg-black dark:bg-white dark:text-black text-white px-10 py-4 font-black tracking-[2px] flex items-center gap-2 hover:bg-[#ff3c78] dark:hover:bg-[#ff3c78] transition-colors uppercase text-xs">SHOP NOW <ArrowRight size={20} /></button>
         </motion.div></div>
