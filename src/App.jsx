@@ -18,31 +18,43 @@ const API_BASE = "https://fakestoreapi.com";
 const ApiService = {
   async getProducts() {
     try {
-      const res = await fetch(`${API_BASE}/products`);
-      if (!res.ok) throw new Error("Failed to fetch products");
-      const baseProducts = await res.json();
+      const [fakeStoreRes, dummyJsonRes] = await Promise.all([
+        fetch(`${API_BASE}/products`),
+        fetch('https://dummyjson.com/products?limit=150')
+      ]);
+      
+      if (!fakeStoreRes.ok) throw new Error("Failed to fetch products");
+      const baseProducts = await fakeStoreRes.json();
+ 
+      let extraProducts = [];
+      if (dummyJsonRes.ok) {
+        const dummyData = await dummyJsonRes.json();
+        
+        const mapCategory = (cat) => {
+          if (['smartphones', 'laptops', 'tablets', 'mobile-accessories'].includes(cat)) return 'electronics';
+          if (['womens-jewellery'].includes(cat)) return 'jewelery';
+          if (['mens-shirts', 'mens-shoes', 'mens-watches'].includes(cat)) return "men's clothing";
+          if (['womens-dresses', 'womens-shoes', 'womens-watches', 'womens-bags', 'tops', 'sunglasses'].includes(cat)) return "women's clothing";
+          return null;
+        };
 
-      // Generate 100 items by applying modifiers to the base 20 items
-      const modifiers = ["", "Premium", "Classic", "Pro", "Signature"];
-      let expandedProducts = [];
-
-      for (let i = 0; i < 5; i++) {
-        baseProducts.forEach(product => {
-          expandedProducts.push({
-            ...product,
-            id: product.id + (i * 1000), // Ensure unique IDs
-            title: i === 0 ? product.title : `${modifiers[i]} ${product.title}`,
-            price: +(product.price * (1 + (i * 0.15))).toFixed(2),
-            rating: {
-              rate: product.rating.rate,
-              count: product.rating.count + Math.floor(Math.random() * 100)
-            }
-          });
-        });
+        extraProducts = dummyData.products
+          .map(p => ({
+            id: p.id + 1000,
+            title: p.title,
+            price: p.price,
+            description: p.description,
+            category: mapCategory(p.category),
+            image: p.thumbnail || p.images?.[0],
+            rating: { rate: p.rating, count: Math.floor(Math.random() * 500) + 10 }
+          }))
+          .filter(p => p.category !== null);
       }
+
+      const combinedProducts = [...baseProducts, ...extraProducts];
       
       // Shuffle them to create an organic massive store feel
-      return expandedProducts.sort(() => Math.random() - 0.5);
+      return combinedProducts.sort(() => Math.random() - 0.5);
     } catch (error) {
       console.error("ApiService.getProducts Error:", error);
       throw error;
