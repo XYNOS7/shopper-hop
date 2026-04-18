@@ -558,6 +558,8 @@ const ShopView = ({ products, loading, onQuickView, onAddCart, isWishlisted, onW
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categories, setCategories] = useState([]);
+  const [sortOrder, setSortOrder] = useState("latest");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   useEffect(() => {
@@ -565,12 +567,15 @@ const ShopView = ({ products, loading, onQuickView, onAddCart, isWishlisted, onW
   }, []);
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
+    let result = products.filter(p => {
       const matchesSearch = p.title.toLowerCase().includes(debouncedSearch.toLowerCase());
       const matchesCat = selectedCategory === "all" || p.category === selectedCategory;
       return matchesSearch && matchesCat;
     });
-  }, [products, debouncedSearch, selectedCategory]);
+    if (sortOrder === 'price-asc') return result.sort((a, b) => a.price - b.price);
+    if (sortOrder === 'price-desc') return result.sort((a, b) => b.price - a.price);
+    return result.sort((a, b) => b.id - a.id);
+  }, [products, debouncedSearch, selectedCategory, sortOrder]);
 
   return (
     <div className="container mx-auto px-6 py-12">
@@ -598,7 +603,7 @@ const ShopView = ({ products, loading, onQuickView, onAddCart, isWishlisted, onW
           </div>
         </aside>
         <main className="flex-1">
-          <div className="mb-12"><h2 className="text-4xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tighter">Shop Explorer</h2><p className="text-slate-400 font-bold uppercase text-xs">Found {filteredProducts.length} premium items</p></div>
+          <div className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4"><div><h2 className="text-4xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tighter">Shop Explorer</h2><p className="text-slate-400 font-bold uppercase text-xs">Found {filteredProducts.length} premium items</p></div><div className="relative"><button onClick={() => setIsFilterOpen(!isFilterOpen)} className="p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-[#ff3c78] dark:hover:border-[#ff3c78] transition-colors shadow-sm flex items-center gap-3 text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest"><Filter size={16} /> Sort By</button><AnimatePresence>{isFilterOpen && (<motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-2xl p-2 z-[100]">{[{ id: 'latest', label: 'Latest Arrivals' }, { id: 'price-desc', label: 'Price: High to Low' }, { id: 'price-asc', label: 'Price: Low to High' }].map(item => (<button key={item.id} onClick={() => { setSortOrder(item.id); setIsFilterOpen(false); }} className={`w-full text-left px-4 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-colors ${sortOrder === item.id ? 'bg-slate-100 dark:bg-slate-800 text-[#ff3c78]' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}>{item.label}</button>))}</motion.div>)}</AnimatePresence></div></div>
           {loading ? <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">{[...Array(6)].map((_, i) => <Skeleton key={i} className="h-[480px]" />)}</div> : <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"><AnimatePresence mode="popLayout">{filteredProducts.map(p => <ProductCard key={p.id} product={p} onQuickView={onQuickView} onAddCart={onAddCart} onWishlist={onWishlist} isWishlisted={isWishlisted(p.id)} />)}</AnimatePresence></div>}
         </main>
       </div>
