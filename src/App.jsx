@@ -568,6 +568,27 @@ const ProfileView = () => {
                     )}
                   </div>
                 </div>
+                <div className="bg-white dark:bg-slate-900 rounded-[32px] p-10 shadow-2xl border border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center gap-3 mb-8"><Heart className="text-[#ff3c78]" size={24} /><h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">My Wishlist</h3></div>
+                  <div className="space-y-4">
+                    {state.wishlist && state.wishlist.length > 0 ? (
+                      state.wishlist.map(item => (
+                      <div key={item.id} className="flex items-center gap-4 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[28px] hover:scale-[1.02] transition-transform shadow-sm border border-slate-100 dark:border-white/5">
+                        <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-xl p-2 shrink-0"><img src={item.image} alt={item.title} className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal" /></div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-black text-slate-900 dark:text-white truncate uppercase text-sm tracking-widest">{item.title}</p>
+                          <p className="font-black text-[#ff3c78]">${item.price}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => { dispatch({ type: 'ADD_TO_CART', payload: item }); setToast({ message: 'Added to bag!' }); }} className="p-3 bg-black dark:bg-white text-white dark:text-black rounded-full hover:bg-[#ff3c78] dark:hover:bg-[#ff3c78] dark:hover:text-white transition-colors shadow-md"><ShoppingCart size={16} /></button>
+                          <button onClick={() => { dispatch({ type: 'TOGGLE_WISHLIST', payload: item }); setToast({ message: 'Removed from wishlist' }); }} className="p-3 bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-full hover:bg-rose-100 dark:hover:bg-rose-500/20 hover:text-rose-500 transition-colors shadow-md"><Trash2 size={16} /></button>
+                        </div>
+                      </div>
+                    ))) : (
+                      <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Your wishlist is empty.</p>
+                    )}
+                  </div>
+                </div>
                 {state.user?.address && (
                   <div className="bg-[#ff3c78] rounded-[40px] p-10 shadow-2xl text-white relative overflow-hidden">
                     <MapPin size={140} className="absolute right-[-40px] bottom-[-40px] opacity-10" />
