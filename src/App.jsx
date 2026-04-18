@@ -20,7 +20,29 @@ const ApiService = {
     try {
       const res = await fetch(`${API_BASE}/products`);
       if (!res.ok) throw new Error("Failed to fetch products");
-      return await res.json();
+      const baseProducts = await res.json();
+
+      // Generate 100 items by applying modifiers to the base 20 items
+      const modifiers = ["", "Premium", "Classic", "Pro", "Signature"];
+      let expandedProducts = [];
+
+      for (let i = 0; i < 5; i++) {
+        baseProducts.forEach(product => {
+          expandedProducts.push({
+            ...product,
+            id: product.id + (i * 1000), // Ensure unique IDs
+            title: i === 0 ? product.title : `${modifiers[i]} ${product.title}`,
+            price: +(product.price * (1 + (i * 0.15))).toFixed(2),
+            rating: {
+              rate: product.rating.rate,
+              count: product.rating.count + Math.floor(Math.random() * 100)
+            }
+          });
+        });
+      }
+      
+      // Shuffle them to create an organic massive store feel
+      return expandedProducts.sort(() => Math.random() - 0.5);
     } catch (error) {
       console.error("ApiService.getProducts Error:", error);
       throw error;
