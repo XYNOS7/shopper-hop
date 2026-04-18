@@ -119,10 +119,7 @@ const initialState = {
 function storeReducer(state, action) {
   switch (action.type) {
     case 'LOGIN':
-      const userData = { ...action.payload, address: action.payload.address || '', avatar: action.payload.avatar || null, orders: [
-        { id: '#ORD-9921', date: 'Oct 12, 2023', total: 129.50, status: 'Delivered' },
-        { id: '#ORD-8812', date: 'Nov 05, 2023', total: 45.00, status: 'Processing' }
-      ]};
+      const userData = { ...action.payload, address: action.payload.address || '', avatar: action.payload.avatar || null, orders: [] };
       localStorage.setItem('sh_user', JSON.stringify(userData));
       return { ...state, user: userData };
     case 'UPDATE_USER': {
